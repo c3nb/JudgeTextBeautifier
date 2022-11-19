@@ -23,6 +23,7 @@ namespace JudgeTextBeautifier
             { HitMargin.Multipress, new Color(0, 1, 0.9301295f, 1) },
             { HitMargin.FailMiss, new Color(0.851175f, 0.3459119f, 1, 1) },
             { HitMargin.FailOverload, new Color(0.851175f, 0.3459119f, 1, 1) },
+            { HitMargin.Auto, new Color(0.3764706f, 1, 0.3066038f, 1) },
         };
         public static readonly HitMargin[] redMargins = new HitMargin[] { HitMargin.TooEarly, HitMargin.VeryEarly, HitMargin.VeryLate, HitMargin.TooLate, HitMargin.FailMiss, HitMargin.FailOverload };
         public static readonly HitMargin[] hitMargins = (HitMargin[])Enum.GetValues(typeof(HitMargin));
