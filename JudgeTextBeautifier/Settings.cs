@@ -58,7 +58,7 @@ namespace JudgeTextBeautifier
         public void OnChange()
         {
             if (Main.HasOverlayer)
-                Overlayer.CompileAll(this);
+                Tags.CompileAll(this);
         }
         private static Settings _settings;
         public bool IsTalmo

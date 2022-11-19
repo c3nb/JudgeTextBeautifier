@@ -1,7 +1,13 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using System.IO;
 using UnityEngine.TextCore.LowLevel;
+using BlendModes;
+using System.Collections.Generic;
+using UnityEngine.TextCore.Text;
+using UnityEngine.TextCore;
+using System.Threading;
 
 namespace JudgeTextBeautifier
 {
@@ -29,26 +35,39 @@ namespace JudgeTextBeautifier
             dead = true;
             ColourSchemeHitMargin hitMarginColours = RDConstants.data.hitMarginColours;
             text.text = RDString.Get("HitMargin." + hitMargin.ToString(), null);
-            if (hitMargin == HitMargin.TooEarly)
-                text.color = hitMarginColours.colourTooEarly;
-            else if (hitMargin == HitMargin.VeryEarly)
-                text.color = hitMarginColours.colourVeryEarly;
-            else if (hitMargin == HitMargin.EarlyPerfect)
-                text.color = hitMarginColours.colourLittleEarly;
-            else if (hitMargin == HitMargin.Perfect)
-                text.color = hitMarginColours.colourPerfect;
-            else if (hitMargin == HitMargin.LatePerfect)
-                text.color = hitMarginColours.colourLittleLate;
-            else if (hitMargin == HitMargin.VeryLate)
-                text.color = hitMarginColours.colourVeryLate;
-            else if (hitMargin == HitMargin.TooLate)
-                text.color = hitMarginColours.colourTooLate;
-            else if (hitMargin == HitMargin.Multipress)
-                text.color = hitMarginColours.colourMultipress;
-            else if (hitMargin == HitMargin.FailMiss)
-                text.color = hitMarginColours.colourFail;
-            else if (hitMargin == HitMargin.FailOverload)
-                text.color = hitMarginColours.colourFail;
+            switch (hitMargin)
+            {
+                case HitMargin.TooEarly:
+                    text.color = hitMarginColours.colourTooEarly;
+                    break;
+                case HitMargin.VeryEarly:
+                    text.color = hitMarginColours.colourVeryEarly;
+                    break;
+                case HitMargin.EarlyPerfect:
+                    text.color = hitMarginColours.colourLittleEarly;
+                    break;
+                case HitMargin.Perfect:
+                    text.color = hitMarginColours.colourPerfect;
+                    break;
+                case HitMargin.LatePerfect:
+                    text.color = hitMarginColours.colourLittleLate;
+                    break;
+                case HitMargin.VeryLate:
+                    text.color = hitMarginColours.colourVeryLate;
+                    break;
+                case HitMargin.TooLate:
+                    text.color = hitMarginColours.colourTooLate;
+                    break;
+                case HitMargin.Multipress:
+                    text.color = hitMarginColours.colourMultipress;
+                    break;
+                case HitMargin.FailMiss:
+                    text.color = hitMarginColours.colourFail;
+                    break;
+                case HitMargin.FailOverload:
+                    text.color = hitMarginColours.colourFail;
+                    break;
+            }
             scrController instance = scrController.instance;
             gameCam = instance.camy.GetComponent<Camera>();
             forceOnScreen = instance.forceHitTextOnScreen;
@@ -78,13 +97,13 @@ namespace JudgeTextBeautifier
             if (dead) return;
             if (forceOnScreen)
             {
-                float num = gameCam.orthographicSize * 2f;
-                float num2 = num * Screen.width / Screen.height;
+                float orthoSize = gameCam.orthographicSize * 2f;
+                float factor = orthoSize * Screen.width / Screen.height;
                 Vector3 position = gameCam.transform.position;
                 Vector3 vector = textPos - position;
                 Vector3 localPosition = textPos;
-                localPosition.x = position.x + Mathf.Clamp(vector.x, -num2 / 2f + minBorderDistance, num2 / 2f - minBorderDistance);
-                localPosition.y = position.y + Mathf.Clamp(vector.y, -num / 2f + minBorderDistance, num / 2f - minBorderDistance);
+                localPosition.x = position.x + Mathf.Clamp(vector.x, -factor / 2f + minBorderDistance, factor / 2f - minBorderDistance);
+                localPosition.y = position.y + Mathf.Clamp(vector.y, -orthoSize / 2f + minBorderDistance, orthoSize / 2f - minBorderDistance);
                 transform.localPosition = localPosition;
             }
             timer += Time.deltaTime;

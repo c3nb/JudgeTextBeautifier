@@ -18,10 +18,10 @@ namespace JudgeTextBeautifier
                 Main.HasOverlayer = value;
                 if (value)
                 {
-                    Overlayer.Enable();
+                    Tags.Enable();
                     OnChange(Settings.settings);
                 }
-                else Overlayer.Disable();
+                else Tags.Disable();
             }
         }
         public static readonly Action<Settings> OnChange = (Action<Settings>)typeof(Settings).GetMethod("OnChange").CreateDelegate(typeof(Action<Settings>));

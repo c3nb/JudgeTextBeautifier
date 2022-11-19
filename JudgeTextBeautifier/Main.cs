@@ -19,7 +19,7 @@ namespace JudgeTextBeautifier
         public static ModEntry mod;
         public static Harmony har;
         public static readonly string TalmoPath = Path.Combine("Mods", "JudgeTextBeautifier", "Talmos.json");
-        public static Talmo[] Talmos;
+        public static Text[] Talmos;
         public static bool HasOverlayer = false;
         public static void Load(ModEntry modEntry)
         {
@@ -29,8 +29,8 @@ namespace JudgeTextBeautifier
                 if (value)
                 {
                     if (File.Exists(TalmoPath))
-                        Talmos = File.ReadAllText(TalmoPath).FromJson<Talmo[]>();
-                    else Talmos = Talmo.GetNewTalmos();
+                        Talmos = File.ReadAllText(TalmoPath).FromJson<Text[]>();
+                    else Talmos = Text.GetNewTalmos();
                     har = new Harmony(mod.Info.Id);
                     har.PatchAll(Assembly.GetExecutingAssembly());
                     _ = Settings.settings;
@@ -48,7 +48,7 @@ namespace JudgeTextBeautifier
                 Language lang = Language.Current;
                 bool newIsTalmo = settings.IsTalmo.DrawBool(lang.ColorMode);
                 if (newIsTalmo)
-                    foreach (Talmo talmo in Talmos)
+                    foreach (Text talmo in Talmos)
                         talmo.TalmoGUI();
                 else
                 {
@@ -153,7 +153,6 @@ namespace JudgeTextBeautifier
                 Array.Clear(arr, 0, 10);
                 sHTMtosHTMP.InitSHTM(ctrl);
             }
-            
         }
     }
 }

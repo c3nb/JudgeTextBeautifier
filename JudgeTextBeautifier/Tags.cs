@@ -3,35 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Overlayer;
+using Overlayer.Core;
 
 namespace JudgeTextBeautifier
 {
-    public static class Overlayer
+    public static class Tags
     {
         public static void Enable()
         {
-            Compilers = new TagCompiler[10]
+            Main.mod.Logger.Log("Text Compiling Enabled!");
+            Compilers = new TextCompiler[10]
             {
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
-                new TagCompiler(Tag.Tags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
+                new TextCompiler(TagManager.AllTags),
             };
         }
         public static void Disable()
             => Compilers = null;
         private static Array Compilers;
         public static string GetResult(HitMargin hitMargin)
-            => ((TagCompiler[])Compilers)[(int)hitMargin].Result;
+            => ((TextCompiler[])Compilers)[(int)hitMargin].Result;
         public static void Compile(HitMargin hitMargin, string source)
-            => ((TagCompiler[])Compilers)[(int)hitMargin].Compile(source);
+            => ((TextCompiler[])Compilers)[(int)hitMargin].Compile(source);
         public static void CompileAll(Settings settings)
         {
             Compile(HitMargin.TooEarly, settings.TooEarly);
