@@ -19,7 +19,7 @@ namespace JudgeTextBeautifier
         public static ModEntry mod;
         public static Harmony har;
         public static readonly string TalmoPath = Path.Combine("Mods", "JudgeTextBeautifier", "Talmos.json");
-        public static Text[] Talmos;
+        public static Talmo[] Talmos;
         public static bool HasOverlayer = false;
         public static void Load(ModEntry modEntry)
         {
@@ -29,11 +29,12 @@ namespace JudgeTextBeautifier
                 if (value)
                 {
                     if (File.Exists(TalmoPath))
-                        Talmos = File.ReadAllText(TalmoPath).FromJson<Text[]>();
-                    else Talmos = Text.GetNewTalmos();
+                        Talmos = File.ReadAllText(TalmoPath).FromJson<Talmo[]>();
+                    else Talmos = Talmo.GetNewTalmos();
                     har = new Harmony(mod.Info.Id);
                     har.PatchAll(Assembly.GetExecutingAssembly());
                     _ = Settings.settings;
+                    HasOverlayer = modEntries.FirstOrDefault(m => m.Info.Id == "Overlayer" && m.Enabled) != null;
                 }
                 else
                 {
@@ -44,11 +45,12 @@ namespace JudgeTextBeautifier
             };
             modEntry.OnGUI = (mod) =>
             {
+                GUILayout.Label($"Overlayer{(HasOverlayer ? "" : " Not")} Detected");
                 Settings settings = Settings.settings;
                 Language lang = Language.Current;
                 bool newIsTalmo = settings.IsTalmo.DrawBool(lang.ColorMode);
                 if (newIsTalmo)
-                    foreach (Text talmo in Talmos)
+                    foreach (Talmo talmo in Talmos)
                         talmo.TalmoGUI();
                 else
                 {

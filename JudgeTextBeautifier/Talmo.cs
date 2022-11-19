@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace JudgeTextBeautifier
 {
-    public class Text
+    public class Talmo
     {
         public static Language lang => Language.Current;
         bool Saved = false; 
@@ -26,15 +26,15 @@ namespace JudgeTextBeautifier
         };
         public static readonly HitMargin[] redMargins = new HitMargin[] { HitMargin.TooEarly, HitMargin.VeryEarly, HitMargin.VeryLate, HitMargin.TooLate, HitMargin.FailMiss, HitMargin.FailOverload };
         public static readonly HitMargin[] hitMargins = (HitMargin[])Enum.GetValues(typeof(HitMargin));
-        public static Text[] GetNewTalmos()
+        public static Talmo[] GetNewTalmos()
         {
-            Text[] talmos = new Text[hitMargins.Length];
+            Talmo[] talmos = new Talmo[hitMargins.Length];
             for (int i = 0; i < hitMargins.Length; i++)
-                talmos[i] = new Text(hitMargins[i]);
+                talmos[i] = new Talmo(hitMargins[i]);
             return talmos;
         }
-        public Text() => Saved = true;
-        public Text(HitMargin hitMargin)
+        public Talmo() => Saved = true;
+        public Talmo(HitMargin hitMargin)
             => this.hitMargin = hitMargin;
         public HitMargin hitMargin
         {

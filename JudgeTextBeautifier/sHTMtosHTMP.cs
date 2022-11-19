@@ -114,7 +114,7 @@ namespace JudgeTextBeautifier
         public static FieldInfo cht = AccessTools.Field(typeof(scrController), "cachedHitTexts");
         public static AccessTools.FieldRef<scrController, Dictionary<HitMargin, scrHitTextMesh[]>> chtRef = AccessTools.FieldRefAccess<scrController, Dictionary<HitMargin, scrHitTextMesh[]>>(cht);
 		public static AccessTools.FieldRef<scrHitTextMesh, TextMesh> text = AccessTools.FieldRefAccess<scrHitTextMesh, TextMesh>("text");
-		public static scrHitTextMeshPro[][] cachedHitTexts = new scrHitTextMeshPro[Text.hitMargins.Length][];
+		public static scrHitTextMeshPro[][] cachedHitTexts = new scrHitTextMeshPro[Talmo.hitMargins.Length][];
 		public static void InitSHT(scrController ctrl)
 		{
 			if (Settings.settings.IsTalmo)
@@ -125,8 +125,8 @@ namespace JudgeTextBeautifier
         {
 			ctrl.hitTextContainer = new GameObject("HitTexts");
 			Transform transform = ctrl.hitTextContainer.transform;
-			cachedHitTexts = new scrHitTextMeshPro[Text.hitMargins.Length][];
-			foreach (HitMargin hitMargin in Text.hitMargins)
+			cachedHitTexts = new scrHitTextMeshPro[Talmo.hitMargins.Length][];
+			foreach (HitMargin hitMargin in Talmo.hitMargins)
 			{
 				scrHitTextMeshPro[] texts = new scrHitTextMeshPro[100];
 				for (int i = 0; i < 100; i++)
@@ -146,7 +146,7 @@ namespace JudgeTextBeautifier
 			ctrl.hitTextContainer = new GameObject("HitTexts");
 			Transform transform = ctrl.hitTextContainer.transform;
 			ctrlCachedHitTexts = new Dictionary<HitMargin, scrHitTextMesh[]>();
-			foreach (HitMargin hitMargin in Text.hitMargins)
+			foreach (HitMargin hitMargin in Talmo.hitMargins)
 			{
 				scrHitTextMesh[] texts = new scrHitTextMesh[100];
 				for (int i = 0; i < 100; i++)
