@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Overlayer.Core;
 
 namespace JudgeTextBeautifier
@@ -12,27 +8,27 @@ namespace JudgeTextBeautifier
         public static void Enable()
         {
             Main.mod.Logger.Log("Text Compiling Enabled!");
-            Compilers = new TextCompiler[10]
+            Compilers = new Replacer[10]
             {
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
-                new TextCompiler(TagManager.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(Overlayer.Main.AllTags),
             };
         }
         public static void Disable()
             => Compilers = null;
         private static Array Compilers;
         public static string GetResult(HitMargin hitMargin)
-            => ((TextCompiler[])Compilers)[(int)hitMargin].Result;
+            => ((Replacer[])Compilers)[(int)hitMargin].Replace();
         public static void Compile(HitMargin hitMargin, string source)
-            => ((TextCompiler[])Compilers)[(int)hitMargin].Compile(source);
+            => ((Replacer[])Compilers)[(int)hitMargin].Source = source;
         public static void CompileAll(Settings settings)
         {
             Compile(HitMargin.TooEarly, settings.TooEarly);

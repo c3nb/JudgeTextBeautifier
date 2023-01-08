@@ -28,6 +28,8 @@ namespace JudgeTextBeautifier
         public string Multipress;
         public string FailMiss;
         public string FailOverload;
+        public string FontSetting;
+        public string FontWarning;
         public static Language Current => RDString.language == SystemLanguage.Korean ? Korean : English;
         public static readonly Language Korean = new Language("텍스트 색상", "왼쪽 상단", "왼쪽 하단", "오른쪽 상단", "오른쪽 하단", "그라데이션", "초기화", "색상 모드")
         {
@@ -41,8 +43,10 @@ namespace JudgeTextBeautifier
             Multipress = "다중 입력",
             FailMiss = "놓침",
             FailOverload = "과부하",
+            FontSetting = "폰트 설정",
+            FontWarning = "색상 모드가 아닐 경우, OS에 설치된 폰트만 가능합니다!"
         };
-    public static readonly Language English = new Language("Text Color", "Top Left", "Bottom Left", "Top Right", "Bottom Right", "Gradient", "Reset", "Color Mode")
+        public static readonly Language English = new Language("Text Color", "Top Left", "Bottom Left", "Top Right", "Bottom Right", "Gradient", "Reset", "Color Mode")
         {
             TooEarly = "TooEarly",
             VeryEarly = "VeryEarly",
@@ -54,6 +58,8 @@ namespace JudgeTextBeautifier
             Multipress = "Multipress",
             FailMiss = "FailMiss",
             FailOverload = "FailOverload",
+            FontSetting = "Font Setting",
+            FontWarning = "If Not In Color Mode, Only Fonts Installed In The OS Are Available!"
         };
         public Language(string textColor, string topLeft, string bottomLeft, string topRight, string bottomRight, string gradient, string reset, string colorMode)
         {

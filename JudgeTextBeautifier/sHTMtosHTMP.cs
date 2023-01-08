@@ -1,11 +1,8 @@
 ﻿using HarmonyLib;
-using RDTools;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using System.Reflection.Emit;
-using UnityEngine.UI;
 
 namespace JudgeTextBeautifier
 {
@@ -134,7 +131,7 @@ namespace JudgeTextBeautifier
 					GameObject go = new GameObject();
 					scrHitTextMeshPro shtmp = go.AddComponent<scrHitTextMeshPro>();
 					go.transform.SetParent(transform);
-					shtmp.Init(hitMargin);
+					shtmp.Init(hitMargin, Settings.settings.Fonts[(int)hitMargin]);
 					texts[i] = shtmp;
 				}
 				cachedHitTexts[(int)hitMargin] = texts;

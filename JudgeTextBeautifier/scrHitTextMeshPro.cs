@@ -1,30 +1,19 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using System.IO;
-using UnityEngine.TextCore.LowLevel;
-using BlendModes;
-using System.Collections.Generic;
-using UnityEngine.TextCore.Text;
-using UnityEngine.TextCore;
-using System.Threading;
 
 namespace JudgeTextBeautifier
 {
     public class scrHitTextMeshPro : ADOBase
     {
-        public static TMP_FontAsset font;
-        public void Init(HitMargin hitMargin)
+        public void Init(HitMargin hitMargin, string font)
         {
-            if (font == null)
-            {
-                var defFont = RDString.fontData.font;
-                font = TMP_FontAsset.CreateFontAsset(defFont, 100, 10, GlyphRenderMode.SDFAA, 1024, 1024);
-            }
             this.hitMargin = hitMargin;
             text = gameObject.AddComponent<TextMeshPro>();
             meshRenderer = text.renderer;
-            text.font = font;
+            if (FontManager.TryGetFont(font, out var fontData))
+                text.font = fontData.fontTMP;
+            else text.font = FontManager.GetFont("Default").fontTMP;
             text.alignment = TextAlignmentOptions.Center;
             text.fontSize = 50;
             text.font.material.SetFloat("_PerspectiveFilter", 0);

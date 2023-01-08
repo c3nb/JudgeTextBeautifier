@@ -122,6 +122,69 @@ namespace JudgeTextBeautifier
                 }
                 if (newIsTalmo != settings.IsTalmo)
                     settings.IsTalmo = newIsTalmo;
+                if (fontSetting = GUILayout.Toggle(fontSetting, lang.FontSetting))
+                {
+                    GUILayout.Label(lang.FontWarning);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.TooEarly);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.TooEarly], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.VeryEarly);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.VeryEarly], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.EarlyPerfect);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.EarlyPerfect], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.Perfect);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.Perfect], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.LatePerfect);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.LatePerfect], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.VeryLate);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.VeryLate], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.TooLate);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.TooLate], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.Multipress);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.Multipress], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.FailMiss);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.FailMiss], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(lang.FailOverload);
+                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.FailOverload], settings.OnChange);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+                }
             };
             modEntry.OnSaveGUI = mod =>
             {
@@ -129,6 +192,7 @@ namespace JudgeTextBeautifier
                 Settings.settings.Save();
             };
         }
+        static bool fontSetting = false;
         public static void StartSHTMP()
         {
             scrController ctrl = scrController.instance;

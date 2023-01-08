@@ -83,5 +83,6 @@ namespace JudgeTextBeautifier
         public string Multipress;
         public string FailMiss;
         public string FailOverload;
+        public string[] Fonts = Enumerable.Repeat("Default", Enum.GetValues(typeof(HitMargin)).Length).ToArray();
     }
 }

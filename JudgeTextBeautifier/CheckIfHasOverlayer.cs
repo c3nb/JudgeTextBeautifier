@@ -13,16 +13,19 @@ namespace JudgeTextBeautifier
     {
         public static void Postfix(UnityModManager.ModEntry __instance, bool value)
         {
-            if (__instance.Info.Id == "Overlayer")
+            try
             {
-                Main.HasOverlayer = value;
-                if (value)
+                if (__instance.Info.Id == "Overlayer")
                 {
-                    Tags.Enable();
-                    OnChange(Settings.settings);
+                    if (Main.HasOverlayer = value)
+                    {
+                        Tags.Enable();
+                        OnChange(Settings.settings);
+                    }
+                    else Tags.Disable();
                 }
-                else Tags.Disable();
             }
+            catch { }
         }
         public static readonly Action<Settings> OnChange = (Action<Settings>)typeof(Settings).GetMethod("OnChange").CreateDelegate(typeof(Action<Settings>));
     }
