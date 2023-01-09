@@ -13,7 +13,7 @@ namespace JudgeTextBeautifier
             {
                 if (FontManager.TryGetFont(Settings.settings.Fonts[(int)hitMargin], out var fontData))
                 {
-                    if (!fontData.font.dynamic) return;
+                    if (!(fontData.font?.dynamic ?? false)) return;
                     ___text.font = fontData.font;
                     ___text.GetComponent<MeshRenderer>().material = fontData.font.material;
                 }

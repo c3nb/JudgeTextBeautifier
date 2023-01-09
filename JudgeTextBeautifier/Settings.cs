@@ -28,6 +28,36 @@ namespace JudgeTextBeautifier
         }
         public void Save()
             => File.WriteAllText(SettingsPath, this.ToJson());
+        public string GetString(HitMargin hitMargin)
+        {
+            if (Main.HasOverlayer)
+                return Tags.GetResult(hitMargin);
+            switch (hitMargin)
+            {
+                case HitMargin.TooEarly: 
+                    return TooEarly;
+                case HitMargin.VeryEarly: 
+                    return VeryEarly;
+                case HitMargin.EarlyPerfect: 
+                    return EarlyPerfect;
+                case HitMargin.Perfect: 
+                    return Perfect;
+                case HitMargin.LatePerfect:
+                    return LatePerfect;
+                case HitMargin.VeryLate:
+                    return VeryLate;
+                case HitMargin.TooLate:
+                    return TooLate;
+                case HitMargin.Multipress:
+                    return Multipress;
+                case HitMargin.FailMiss:
+                    return FailMiss;
+                case HitMargin.FailOverload:
+                    return FailOverload;
+                default:
+                    return string.Empty;
+            }
+        }
         public void Reset(bool force = false)
         {
             if (force)

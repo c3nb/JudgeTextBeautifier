@@ -9,28 +9,13 @@ namespace JudgeTextBeautifier
     [HarmonyPatch(typeof(scrController))]
     public static class sHTMtosHTMP
     {
-        [HarmonyTranspiler]
+        [HarmonyPrefix]
         [HarmonyPatch("Awake")]
-        public static IEnumerable<CodeInstruction> CtrlAwakePrefix(IEnumerable<CodeInstruction> instructions)
+        public static void Postfix(scrController __instance)
 		{
-			List<CodeInstruction> insts = new List<CodeInstruction>(instructions);
-            insts.InsertRange(0, new[]
-            {
-                new CodeInstruction(OpCodes.Call, typeof(sHTMtosHTMP).GetMethod("SetTalmoTitle")),
-                new CodeInstruction(OpCodes.Call, typeof(Settings).GetProperty("settings").GetGetMethod()),
-                new CodeInstruction(OpCodes.Ldc_I4_0),
-                new CodeInstruction(OpCodes.Callvirt, typeof(Settings).GetMethod("Reset"))
-            });
-			int chtIndex = insts.FindIndex(inst => inst.opcode == OpCodes.Stfld && inst.operand is FieldInfo fi && fi.Name == "cachedHitTexts");
-			insts.RemoveAt(chtIndex);
-			insts.RemoveAt(chtIndex - 1);
-			insts.Insert(chtIndex - 1, new CodeInstruction(OpCodes.Call, typeof(sHTMtosHTMP).GetMethod("InitSHT")));
-			int bchmrkIndex = insts.FindIndex(inst => inst.opcode == OpCodes.Ldfld && inst.operand is FieldInfo fi && fi.Name == "benchmarkMode");
-			chtIndex++;
-			Main.mod.Logger.Log($"chtIndex:{insts[chtIndex]}, bchmarkIndex:{insts[bchmrkIndex]}");
-			insts.RemoveRange(chtIndex, bchmrkIndex - chtIndex - 1);
-            Main.mod.Logger.Log($"chtIndex:{insts[chtIndex]}, bchmarkIndex:{insts[bchmrkIndex]}");
-			return insts;
+			SetTalmoTitle();
+			Settings.settings.Reset();
+			InitSHT(__instance);
         }
 		public static void SetTalmoTitle()
 		{
@@ -38,52 +23,17 @@ namespace JudgeTextBeautifier
         }
 		[HarmonyPrefix]
 		[HarmonyPatch("ShowHitText")]
-		public static bool CtrlShowHitTextPrefix(scrController __instance, HitMargin hitMargin, Vector3 position, float angle)
+		public static bool CtrlShowHitTextPrefix(HitMargin hitMargin, Vector3 position, float angle)
         {
 			if (!Settings.settings.IsTalmo)
             {
-				foreach (var shtm in chtRef(__instance)[hitMargin])
+				foreach (var shtm in ctrlCachedHitTexts[hitMargin])
                 {
 					if (shtm.dead)
                     {
 						TextMesh text = sHTMtosHTMP.text(shtm);
 						text.richText = false;
-						if (Main.HasOverlayer)
-							text.text = Tags.GetResult(hitMargin);
-						else
-							switch (hitMargin)
-							{
-								case HitMargin.TooEarly:
-									text.text = Settings.settings.TooEarly;
-									break;
-								case HitMargin.VeryEarly:
-									text.text = Settings.settings.VeryEarly;
-									break;
-								case HitMargin.EarlyPerfect:
-									text.text = Settings.settings.EarlyPerfect;
-									break;
-								case HitMargin.Perfect:
-									text.text = Settings.settings.Perfect;
-									break;
-								case HitMargin.LatePerfect:
-									text.text = Settings.settings.LatePerfect;
-									break;
-								case HitMargin.VeryLate:
-									text.text = Settings.settings.VeryLate;
-									break;
-								case HitMargin.TooLate:
-									text.text = Settings.settings.TooLate;
-									break;
-								case HitMargin.Multipress:
-									text.text = Settings.settings.Multipress;
-									break;
-								case HitMargin.FailMiss:
-									text.text = Settings.settings.FailMiss;
-									break;
-								case HitMargin.FailOverload:
-									text.text = Settings.settings.FailOverload;
-									break;
-							}
+						text.text = Settings.settings.GetString(hitMargin);
 						shtm.Show(position, angle);
 						return false;
                     }
@@ -148,8 +98,7 @@ namespace JudgeTextBeautifier
 				scrHitTextMesh[] texts = new scrHitTextMesh[100];
 				for (int i = 0; i < 100; i++)
 				{
-					scrHitTextMesh shtm = UnityEngine.Object.Instantiate(RDConstants.data.hitTextPrefab, transform)
-						.GetComponentInChildren<scrHitTextMesh>();
+					scrHitTextMesh shtm = Object.Instantiate(RDConstants.data.hitTextPrefab, transform).GetComponentInChildren<scrHitTextMesh>();
 					shtm.Init(hitMargin);
 					texts[i] = shtm;
 				}

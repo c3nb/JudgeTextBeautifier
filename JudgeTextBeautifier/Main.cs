@@ -202,7 +202,7 @@ namespace JudgeTextBeautifier
                 if (ctrl.gameworld)
                 {
                     var hitTexts = sHTMtosHTMP.ctrlCachedHitTexts;
-                    hitTexts.ForEach(kvp => kvp.Value.ForEach(shtm => Object.Destroy(shtm)));
+                    hitTexts.ForEach(kvp => kvp.Value.ForEach(DestroyIfExist));
                     hitTexts.Clear();
                     sHTMtosHTMP.InitSHTMP(ctrl);
                 }
@@ -215,10 +215,15 @@ namespace JudgeTextBeautifier
             scrController ctrl = scrController.instance;
             if (ctrl != null && ctrl && ctrl.gameworld)
             {
-                arr.ForEach(ary => ary.ForEach(shtm => Object.Destroy(shtm)));
+                arr.ForEach(ary => ary.ForEach(DestroyIfExist));
                 Array.Clear(arr, 0, 10);
                 sHTMtosHTMP.InitSHTM(ctrl);
             }
+        }
+        static void DestroyIfExist(Object obj)
+        {
+            if (obj)
+                Object.Destroy(obj);
         }
     }
 }
