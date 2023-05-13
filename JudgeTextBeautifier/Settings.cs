@@ -84,6 +84,7 @@ namespace JudgeTextBeautifier
             Multipress ??= RDString.Get("HitMargin.Multipress");
             FailMiss ??= RDString.Get("HitMargin.FailMiss");
             FailOverload ??= RDString.Get("HitMargin.FailOverload");
+            TextOffset ??= new float[2] { 0, 0 };
         }
         public void OnChange()
         {
@@ -113,6 +114,12 @@ namespace JudgeTextBeautifier
         public string Multipress;
         public string FailMiss;
         public string FailOverload;
+
+        public float FontSize = 50;
+        public float TextDuration = 0.5f;
+        public float TextPunchDuration = 0.15f;
+        public float[] TextOffset = new float[2] { 0, 0 };
+
         public string[] Fonts = Enumerable.Repeat("Default", Enum.GetValues(typeof(HitMargin)).Length).ToArray();
     }
 }

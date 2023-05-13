@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using System.Reflection.Emit;
+using static System.Net.WebRequestMethods;
+using Mono.Cecil.Cil;
 
 namespace JudgeTextBeautifier
 {
     [HarmonyPatch(typeof(scrController))]
     public static class sHTMtosHTMP
     {
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         [HarmonyPatch("Awake")]
         public static void Postfix(scrController __instance)
 		{
@@ -17,7 +19,7 @@ namespace JudgeTextBeautifier
 			Settings.settings.Reset();
 			InitSHT(__instance);
         }
-		public static void SetTalmoTitle()
+        public static void SetTalmoTitle()
 		{
             Main.Talmos.ForEach(talmo => talmo.title = RDString.Get("HitMargin." + talmo.hitMargin.ToString()));
         }
@@ -25,6 +27,8 @@ namespace JudgeTextBeautifier
 		[HarmonyPatch("ShowHitText")]
 		public static bool CtrlShowHitTextPrefix(HitMargin hitMargin, Vector3 position, float angle)
         {
+			var offset = Settings.settings.TextOffset;
+			position += new Vector3(offset[0], offset[1]);
 			if (!Settings.settings.IsTalmo)
             {
 				foreach (var shtm in ctrlCachedHitTexts[hitMargin])
@@ -34,7 +38,9 @@ namespace JudgeTextBeautifier
 						TextMesh text = sHTMtosHTMP.text(shtm);
 						text.richText = false;
 						text.text = Settings.settings.GetString(hitMargin);
-						shtm.Show(position, angle);
+                        if (Settings.settings.TextPunchDuration >= 0)
+                            shtm.duration = Settings.settings.TextPunchDuration;
+                        shtm.Show(position, angle);
 						return false;
                     }
                 }
@@ -47,7 +53,11 @@ namespace JudgeTextBeautifier
 				var shtmp = arr[i];
 				if (shtmp.dead)
                 {
-					shtmp.Show(position, angle);
+                    if (Settings.settings.TextDuration >= 0)
+                        shtmp.appearDuration = Settings.settings.TextDuration;
+                    if (Settings.settings.TextPunchDuration >= 0)
+                        shtmp.duration = Settings.settings.TextPunchDuration;
+                    shtmp.Show(position, angle);
 					return false;
 				}
             }
@@ -82,6 +92,8 @@ namespace JudgeTextBeautifier
 					scrHitTextMeshPro shtmp = go.AddComponent<scrHitTextMeshPro>();
 					go.transform.SetParent(transform);
 					shtmp.Init(hitMargin, Settings.settings.Fonts[(int)hitMargin]);
+					if (Settings.settings.FontSize >= 0)
+						shtmp.text.fontSize = Settings.settings.FontSize;
 					texts[i] = shtmp;
 				}
 				cachedHitTexts[(int)hitMargin] = texts;
@@ -100,7 +112,7 @@ namespace JudgeTextBeautifier
 				{
 					scrHitTextMesh shtm = Object.Instantiate(RDConstants.data.hitTextPrefab, transform).GetComponentInChildren<scrHitTextMesh>();
 					shtm.Init(hitMargin);
-					texts[i] = shtm;
+                    texts[i] = shtm;
 				}
 				ctrlCachedHitTexts[hitMargin] = texts;
 			}

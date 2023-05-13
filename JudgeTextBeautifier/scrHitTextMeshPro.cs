@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Overlayer.Core.Utils;
 
 namespace JudgeTextBeautifier
 {
@@ -10,6 +11,7 @@ namespace JudgeTextBeautifier
         {
             this.hitMargin = hitMargin;
             text = gameObject.AddComponent<TextMeshPro>();
+            gameObject.MakeFlexible();
             meshRenderer = text.renderer;
             if (FontManager.TryGetFont(font, out var fontData))
                 text.font = fontData.fontTMP;
@@ -72,7 +74,7 @@ namespace JudgeTextBeautifier
             dead = false;
             text.DOKill(false);
             text.color = Color.white;
-            text.DOFade(0f, 0.7f).SetDelay(0.5f).SetEase(Ease.OutQuad);
+            text.DOFade(0f, 0.7f).SetDelay(appearDuration).SetEase(Ease.OutQuad);
             scrMisc.Rotate2D(transform, scrController.instance.camy.transform.rotation.eulerAngles.z);
             transform.DOKill(false);
             transform.localScale = new Vector3(startingSize, startingSize, 1f);
@@ -96,7 +98,7 @@ namespace JudgeTextBeautifier
                 transform.localPosition = localPosition;
             }
             timer += Time.deltaTime;
-            if (timer > 1.25f)
+            if (timer > 1.25f + appearDuration)
             {
                 dead = true;
                 transform.DOKill(false);
@@ -119,5 +121,7 @@ namespace JudgeTextBeautifier
 		public float duration = 0.15f;
 		public int vibrato = 5;
 		public float elasticity = 1;
+
+        public float appearDuration = 0.5f;
 	}
 }

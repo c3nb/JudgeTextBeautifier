@@ -56,7 +56,11 @@ namespace JudgeTextBeautifier
                 {
                     GUILayout.BeginHorizontal();
                     if (GUILayout.Button(lang.Reset))
+                    {
                         settings.Reset(true);
+                        settings.FontSize = 50;
+                        UpdateFontSize();
+                    }
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
@@ -185,6 +189,49 @@ namespace JudgeTextBeautifier
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                 }
+
+                string size = settings.FontSize.ToString();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(lang.FontSize);
+                Utils.DrawTextArea(ref size, () =>
+                {
+                    if (float.TryParse(size, out float result))
+                    {
+                        settings.FontSize = result;
+                        if (result >= 0)
+                            UpdateFontSize();
+                    }
+                });
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
+                string duration = settings.TextDuration.ToString();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(lang.TextDuration);
+                Utils.DrawTextArea(ref duration, () =>
+                {
+                    if (float.TryParse(duration, out float result))
+                        settings.TextDuration = result;
+                });
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
+                string pduration = settings.TextPunchDuration.ToString();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(lang.TextPunchDuration);
+                Utils.DrawTextArea(ref pduration, () =>
+                {
+                    if (float.TryParse(pduration, out float result))
+                        settings.TextPunchDuration = result;
+                });
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(lang.TextOffset);
+                Utils.DrawVector2FloatArr(ref settings.TextOffset);
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
             };
             modEntry.OnSaveGUI = mod =>
             {
@@ -224,6 +271,16 @@ namespace JudgeTextBeautifier
         {
             if (obj)
                 Object.Destroy(obj);
+        }
+        public static void UpdateFontSize()
+        {
+            if (!(scrController.instance?.gameworld ?? false)) return;
+            if (Settings.settings.IsTalmo)
+                foreach (var text in sHTMtosHTMP.cachedHitTexts.SelectMany(t => t))
+                    text.text.fontSize = Settings.settings.FontSize;
+            else
+                foreach (var text in sHTMtosHTMP.ctrlCachedHitTexts.Values.SelectMany(t => t))
+                    sHTMtosHTMP.text(text).fontSize = (int)Settings.settings.FontSize;
         }
     }
 }

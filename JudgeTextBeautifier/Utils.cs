@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityModManagerNet.UnityModManager.UI;
 
 namespace JudgeTextBeautifier
@@ -38,5 +39,6 @@ namespace JudgeTextBeautifier
         "<color=#0000FF>B</color>",
         "A"
             }, style, option);
+        public static bool DrawVector2FloatArr(ref float[] vector, GUIStyle style = null, params GUILayoutOption[] option) => DrawFloatMultiField(ref vector, new string[] { "X", "Y" }, style, option);
     }
 }

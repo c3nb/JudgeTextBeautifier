@@ -1,5 +1,6 @@
 ﻿using System;
 using Overlayer.Core;
+using Overlayer.Core.Tags;
 
 namespace JudgeTextBeautifier
 {
@@ -10,16 +11,16 @@ namespace JudgeTextBeautifier
             Main.mod.Logger.Log("Text Compiling Enabled!");
             Compilers = new Replacer[10]
             {
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
-                new Replacer(Overlayer.Main.AllTags),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
+                new Replacer(TagManager.All),
             };
         }
         public static void Disable()
