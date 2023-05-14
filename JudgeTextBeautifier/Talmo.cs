@@ -76,60 +76,18 @@ namespace JudgeTextBeautifier
             {
                 Utils.IndentGUI(() =>
                 {
-                    Utils.IndentGUI(() =>
-                    {
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label(lang.TextColor);
-                        GUILayout.Space(1);
-                        if (Utils.DrawColor(ref Color)) Apply();
-                        GUILayout.FlexibleSpace();
-                        GUILayout.EndHorizontal();
-                    });
-                    bool newIsGradient = GUILayout.Toggle(IsGradient, lang.Gradient);
-                    if (newIsGradient)
+                    Utils.IndentGUI(() => Utils.DrawHorizontalFlexibleColor(lang.TextColor, Color, Apply));
+                    Utils.DrawToggle(lang.Gradient, ref IsGradient, () =>
                     {
                         Utils.IndentGUI(() =>
                         {
-                            GUILayout.BeginHorizontal();
-                            if (GUILayout.Button(lang.Reset))
-                                Reset(true);
-                            GUILayout.FlexibleSpace();
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(lang.TopLeft);
-                            GUILayout.Space(1);
-                            if (Utils.DrawColor(ref Gradient[0])) Apply();
-                            GUILayout.FlexibleSpace();
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(lang.TopRight);
-                            GUILayout.Space(1);
-                            if (Utils.DrawColor(ref Gradient[1])) Apply();
-                            GUILayout.FlexibleSpace();
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(lang.BottomLeft);
-                            GUILayout.Space(1);
-                            if (Utils.DrawColor(ref Gradient[2])) Apply();
-                            GUILayout.FlexibleSpace();
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(lang.BottomRight);
-                            GUILayout.Space(1);
-                            if (Utils.DrawColor(ref Gradient[3])) Apply();
-                            GUILayout.FlexibleSpace();
-                            GUILayout.EndHorizontal();
+                            Utils.DrawHorizontalFlexibleButton(lang.Reset, () => Reset(true));
+                            Utils.DrawHorizontalFlexibleColor(lang.TopLeft, Gradient[0], Apply);
+                            Utils.DrawHorizontalFlexibleColor(lang.TopRight, Gradient[1], Apply);
+                            Utils.DrawHorizontalFlexibleColor(lang.BottomLeft, Gradient[2], Apply);
+                            Utils.DrawHorizontalFlexibleColor(lang.BottomRight, Gradient[3], Apply);
                         });
-                    }
-                    if (IsGradient != newIsGradient)
-                    {
-                        IsGradient = newIsGradient;
-                        Apply();
-                    }
+                    }, null, Apply);
                 });
             }
         }

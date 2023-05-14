@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using System.Reflection.Emit;
-using static System.Net.WebRequestMethods;
-using Mono.Cecil.Cil;
 
 namespace JudgeTextBeautifier
 {
@@ -17,13 +14,22 @@ namespace JudgeTextBeautifier
 		{
 			SetTalmoTitle();
 			Settings.settings.Reset();
+			Object.Destroy(__instance.hitTextContainer);
 			InitSHT(__instance);
         }
         public static void SetTalmoTitle()
 		{
             Main.Talmos.ForEach(talmo => talmo.title = RDString.Get("HitMargin." + talmo.hitMargin.ToString()));
         }
-		[HarmonyPrefix]
+		public static scrHitTextMesh FallbackLatestText(HitMargin hitMargin)
+		{
+			return ctrlCachedHitTexts[hitMargin].MaxFloat(t => timer(t));
+		}
+        public static scrHitTextMeshPro FallbackLatestTextP(HitMargin hitMargin)
+        {
+            return cachedHitTexts[(int)hitMargin].MaxFloat(t => t.timer);
+        }
+        [HarmonyPrefix]
 		[HarmonyPatch("ShowHitText")]
 		public static bool CtrlShowHitTextPrefix(HitMargin hitMargin, Vector3 position, float angle)
         {
@@ -44,11 +50,12 @@ namespace JudgeTextBeautifier
 						return false;
                     }
                 }
+				FallbackLatestText(hitMargin).Show(position, angle);
                 return false;
             }
             var margin = (int)hitMargin;
 			var arr = cachedHitTexts[margin];
-			for (int i = 0; i < 100; i++)
+			for (int i = 0; i < Settings.settings.CachedTextCount; i++)
             {
 				var shtmp = arr[i];
 				if (shtmp.dead)
@@ -61,7 +68,8 @@ namespace JudgeTextBeautifier
 					return false;
 				}
             }
-			return false;
+            FallbackLatestTextP(hitMargin).Show(position, angle);
+            return false;
         }
 		public static Dictionary<HitMargin, scrHitTextMesh[]> ctrlCachedHitTexts
 		{
@@ -71,6 +79,7 @@ namespace JudgeTextBeautifier
         public static FieldInfo cht = AccessTools.Field(typeof(scrController), "cachedHitTexts");
         public static AccessTools.FieldRef<scrController, Dictionary<HitMargin, scrHitTextMesh[]>> chtRef = AccessTools.FieldRefAccess<scrController, Dictionary<HitMargin, scrHitTextMesh[]>>(cht);
 		public static AccessTools.FieldRef<scrHitTextMesh, TextMesh> text = AccessTools.FieldRefAccess<scrHitTextMesh, TextMesh>("text");
+		public static AccessTools.FieldRef<scrHitTextMesh, float> timer = AccessTools.FieldRefAccess<scrHitTextMesh, float>("timer");
 		public static scrHitTextMeshPro[][] cachedHitTexts = new scrHitTextMeshPro[Talmo.hitMargins.Length][];
 		public static void InitSHT(scrController ctrl)
 		{
@@ -83,10 +92,11 @@ namespace JudgeTextBeautifier
 			ctrl.hitTextContainer = new GameObject("HitTexts");
 			Transform transform = ctrl.hitTextContainer.transform;
 			cachedHitTexts = new scrHitTextMeshPro[Talmo.hitMargins.Length][];
-			foreach (HitMargin hitMargin in Talmo.hitMargins)
+            var cacheCount = Settings.settings.CachedTextCount;
+            foreach (HitMargin hitMargin in Talmo.hitMargins)
 			{
-				scrHitTextMeshPro[] texts = new scrHitTextMeshPro[100];
-				for (int i = 0; i < 100; i++)
+				scrHitTextMeshPro[] texts = new scrHitTextMeshPro[cacheCount];
+				for (int i = 0; i < cacheCount; i++)
 				{
 					GameObject go = new GameObject();
 					scrHitTextMeshPro shtmp = go.AddComponent<scrHitTextMeshPro>();
@@ -105,10 +115,11 @@ namespace JudgeTextBeautifier
 			ctrl.hitTextContainer = new GameObject("HitTexts");
 			Transform transform = ctrl.hitTextContainer.transform;
 			ctrlCachedHitTexts = new Dictionary<HitMargin, scrHitTextMesh[]>();
-			foreach (HitMargin hitMargin in Talmo.hitMargins)
+            var cacheCount = Settings.settings.CachedTextCount;
+            foreach (HitMargin hitMargin in Talmo.hitMargins)
 			{
-				scrHitTextMesh[] texts = new scrHitTextMesh[100];
-				for (int i = 0; i < 100; i++)
+				scrHitTextMesh[] texts = new scrHitTextMesh[cacheCount];
+				for (int i = 0; i < cacheCount; i++)
 				{
 					scrHitTextMesh shtm = Object.Instantiate(RDConstants.data.hitTextPrefab, transform).GetComponentInChildren<scrHitTextMesh>();
 					shtm.Init(hitMargin);

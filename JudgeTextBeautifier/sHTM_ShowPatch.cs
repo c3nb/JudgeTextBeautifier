@@ -19,7 +19,10 @@ namespace JudgeTextBeautifier
             material.DOKill(false);
             material.color = Color.white;
             if (Settings.settings.TextDuration >= 0)
-                material.DOFade(0f, 0.7f).SetDelay(Settings.settings.TextDuration).SetEase(Ease.OutQuad);
+            {
+                var (delay, fade) = Settings.settings.TextDuration.Distribute(0.41666667f, 0.5833334f);
+                material.DOFade(0f, fade).SetDelay(delay).SetEase(Ease.OutQuad);
+            }
             else material.DOFade(0f, 0.7f).SetDelay(0.5f).SetEase(Ease.OutQuad);
             scrMisc.Rotate2D(__instance.transform, scrController.instance.camy.transform.rotation.eulerAngles.z);
             __instance.transform.DOKill(false);

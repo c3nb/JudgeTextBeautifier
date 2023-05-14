@@ -34,6 +34,8 @@ namespace JudgeTextBeautifier
         public string TextDuration;
         public string TextPunchDuration;
         public string TextOffset;
+        public string CachedTextCount;
+
         public static Language Current => RDString.language == SystemLanguage.Korean ? Korean : English;
         public static readonly Language Korean = new Language("텍스트 색상", "왼쪽 상단", "왼쪽 하단", "오른쪽 상단", "오른쪽 하단", "그라데이션", "초기화", "색상 모드")
         {
@@ -52,7 +54,8 @@ namespace JudgeTextBeautifier
             FontSize = "글자 크기",
             TextDuration = "글자 지속시간",
             TextPunchDuration = "글자 나타나는 효과 지속시간",
-            TextOffset = "글자 오프셋"
+            TextOffset = "글자 오프셋",
+            CachedTextCount = "캐시된 텍스트 개수"
         };
         public static readonly Language English = new Language("Text Color", "Top Left", "Bottom Left", "Top Right", "Bottom Right", "Gradient", "Reset", "Color Mode")
         {
@@ -70,7 +73,8 @@ namespace JudgeTextBeautifier
             FontWarning = "If Not In Color Mode, Only Fonts Installed In The OS Are Available!",
             FontSize = "Font Size",
             TextDuration = "Text Appear Animation Duration",
-            TextOffset = "Text Offset"
+            TextOffset = "Text Offset",
+            CachedTextCount = "Cached Text Count"
         };
         public Language(string textColor, string topLeft, string bottomLeft, string topRight, string bottomRight, string gradient, string reset, string colorMode)
         {

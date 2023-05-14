@@ -120,6 +120,8 @@ namespace JudgeTextBeautifier
         public float TextPunchDuration = 0.15f;
         public float[] TextOffset = new float[2] { 0, 0 };
 
+        public int CachedTextCount = 100;
+
         public string[] Fonts = Enumerable.Repeat("Default", Enum.GetValues(typeof(HitMargin)).Length).ToArray();
     }
 }

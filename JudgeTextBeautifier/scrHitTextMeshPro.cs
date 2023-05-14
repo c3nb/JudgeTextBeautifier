@@ -74,7 +74,12 @@ namespace JudgeTextBeautifier
             dead = false;
             text.DOKill(false);
             text.color = Color.white;
-            text.DOFade(0f, 0.7f).SetDelay(appearDuration).SetEase(Ease.OutQuad);
+            if (appearDuration >= 0)
+            {
+                var (delay, fade) = appearDuration.Distribute(0.41666667f, 0.5833334f);
+                text.DOFade(0f, fade).SetDelay(delay).SetEase(Ease.OutQuad);
+            }
+            else text.DOFade(0f, 0.7f).SetDelay(0.5f).SetEase(Ease.OutQuad);
             scrMisc.Rotate2D(transform, scrController.instance.camy.transform.rotation.eulerAngles.z);
             transform.DOKill(false);
             transform.localScale = new Vector3(startingSize, startingSize, 1f);
@@ -98,7 +103,7 @@ namespace JudgeTextBeautifier
                 transform.localPosition = localPosition;
             }
             timer += Time.deltaTime;
-            if (timer > 1.25f + appearDuration)
+            if (timer > Settings.settings.TextDuration.GraterThan(0, 1.25f))
             {
                 dead = true;
                 transform.DOKill(false);

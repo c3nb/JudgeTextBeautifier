@@ -23,7 +23,7 @@ namespace JudgeTextBeautifier
                 __instance.transform.localPosition = vector2;
             }
             ___timer += Time.deltaTime;
-            if (___timer > 1.25f + (Settings.settings.TextDuration >= 0 ? Settings.settings.TextDuration : 0))
+            if (___timer > Settings.settings.TextDuration.GraterThan(0, 1.25f))
             {
                 __instance.dead = true;
                 __instance.transform.DOKill(false);

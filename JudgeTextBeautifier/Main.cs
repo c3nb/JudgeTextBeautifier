@@ -54,184 +54,47 @@ namespace JudgeTextBeautifier
                         talmo.TalmoGUI();
                 else
                 {
-                    GUILayout.BeginHorizontal();
-                    if (GUILayout.Button(lang.Reset))
+                    Utils.DrawHorizontalFlexibleButton(lang.Reset, () =>
                     {
                         settings.Reset(true);
                         settings.FontSize = 50;
                         UpdateFontSize();
-                    }
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.TooEarly);
-                    Utils.DrawTextArea(ref settings.TooEarly, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.VeryEarly);
-                    Utils.DrawTextArea(ref settings.VeryEarly, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.EarlyPerfect);
-                    Utils.DrawTextArea(ref settings.EarlyPerfect, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.Perfect);
-                    Utils.DrawTextArea(ref settings.Perfect, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.LatePerfect);
-                    Utils.DrawTextArea(ref settings.LatePerfect, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.VeryLate);
-                    Utils.DrawTextArea(ref settings.VeryLate, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.TooLate);
-                    Utils.DrawTextArea(ref settings.TooLate, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.Multipress);
-                    Utils.DrawTextArea(ref settings.Multipress, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.FailMiss);
-                    Utils.DrawTextArea(ref settings.FailMiss, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.FailOverload);
-                    Utils.DrawTextArea(ref settings.FailOverload, settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
+                    });
+                    Utils.DrawHorizontalFlexibleTextArea(lang.TooEarly, ref settings.TooEarly, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.VeryEarly, ref settings.VeryEarly, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.EarlyPerfect, ref settings.EarlyPerfect, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.LatePerfect, ref settings.LatePerfect, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.VeryLate, ref settings.VeryLate, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.TooLate, ref settings.TooLate, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.Multipress, ref settings.Multipress, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.FailMiss, ref settings.FailMiss, settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.FailOverload, ref settings.FailOverload, settings.OnChange);
                 }
                 if (newIsTalmo != settings.IsTalmo)
                     settings.IsTalmo = newIsTalmo;
                 if (fontSetting = GUILayout.Toggle(fontSetting, lang.FontSetting))
                 {
                     GUILayout.Label(lang.FontWarning);
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.TooEarly);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.TooEarly], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.VeryEarly);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.VeryEarly], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.EarlyPerfect);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.EarlyPerfect], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.Perfect);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.Perfect], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.LatePerfect);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.LatePerfect], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.VeryLate);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.VeryLate], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.TooLate);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.TooLate], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.Multipress);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.Multipress], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.FailMiss);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.FailMiss], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(lang.FailOverload);
-                    Utils.DrawTextArea(ref settings.Fonts[(int)HitMargin.FailOverload], settings.OnChange);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
+                    Utils.DrawHorizontalFlexibleTextArea(lang.TooEarly, ref settings.Fonts[(int)HitMargin.TooEarly], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.VeryEarly, ref settings.Fonts[(int)HitMargin.VeryEarly], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.EarlyPerfect, ref settings.Fonts[(int)HitMargin.EarlyPerfect], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.Perfect, ref settings.Fonts[(int)HitMargin.Perfect], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.LatePerfect, ref settings.Fonts[(int)HitMargin.LatePerfect], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.VeryLate, ref settings.Fonts[(int)HitMargin.VeryLate], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.TooLate, ref settings.Fonts[(int)HitMargin.TooLate], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.Multipress, ref settings.Fonts[(int)HitMargin.Multipress], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.FailMiss, ref settings.Fonts[(int)HitMargin.FailMiss], settings.OnChange);
+                    Utils.DrawHorizontalFlexibleTextArea(lang.FailOverload, ref settings.Fonts[(int)HitMargin.FailOverload], settings.OnChange);
                 }
-
-                string size = settings.FontSize.ToString();
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(lang.FontSize);
-                Utils.DrawTextArea(ref size, () =>
+                Utils.DrawHorizontalFlexibleFloatField(lang.FontSize, ref settings.FontSize, () =>
                 {
-                    if (float.TryParse(size, out float result))
-                    {
-                        settings.FontSize = result;
-                        if (result >= 0)
-                            UpdateFontSize();
-                    }
+                    if (settings.FontSize >= 0)
+                        UpdateFontSize();
                 });
-                GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
-
-                string duration = settings.TextDuration.ToString();
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(lang.TextDuration);
-                Utils.DrawTextArea(ref duration, () =>
-                {
-                    if (float.TryParse(duration, out float result))
-                        settings.TextDuration = result;
-                });
-                GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
-
-                string pduration = settings.TextPunchDuration.ToString();
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(lang.TextPunchDuration);
-                Utils.DrawTextArea(ref pduration, () =>
-                {
-                    if (float.TryParse(pduration, out float result))
-                        settings.TextPunchDuration = result;
-                });
-                GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(lang.TextOffset);
-                Utils.DrawVector2FloatArr(ref settings.TextOffset);
-                GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
+                Utils.DrawHorizontalFlexibleFloatField(lang.TextDuration, ref settings.TextDuration);
+                Utils.DrawHorizontalFlexibleFloatField(lang.TextPunchDuration, ref settings.TextPunchDuration);
+                Utils.DrawHorizontalFlexibleIntField(lang.CachedTextCount, ref settings.CachedTextCount);
+                Utils.DrawHorizontalFlexibleFloatArrayField(new[] { "X", "Y" }, settings.TextOffset);
             };
             modEntry.OnSaveGUI = mod =>
             {
