@@ -1,6 +1,4 @@
 ﻿using System;
-using Overlayer.Core;
-using Overlayer.Core.Tags;
 
 namespace JudgeTextBeautifier
 {

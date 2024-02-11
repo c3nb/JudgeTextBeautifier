@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityModManagerNet.UnityModManager.UI;
 
 namespace JudgeTextBeautifier
 {
     public static class Utils
     {
+        public static GameObject MakeFlexible(this GameObject go)
+        {
+            ContentSizeFitter csf = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
+            csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            return go;
+        }
         public static readonly string[] ColorTitles = new string[] { "<color=#FF0000>R</color>", "<color=#00FF00>G</color>", "<color=#0000FF>B</color>", "A" };
         public static float GraterThan(this float f, float minValue, float ifLessThan) => f < minValue ? ifLessThan : f;
         public static (float, float) Distribute(this float f, float a, float b)

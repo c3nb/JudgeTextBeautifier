@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Overlayer.Core.Utils;
 
 namespace JudgeTextBeautifier
 {
