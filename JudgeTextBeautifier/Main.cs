@@ -29,6 +29,12 @@ namespace JudgeTextBeautifier
                     har = new Harmony(mod.Info.Id);
                     har.PatchAll(Assembly.GetExecutingAssembly());
                     _ = Settings.settings;
+                    var len = Enum.GetValues(typeof(HitMargin)).Length;
+                    if (Settings.settings.Fonts.Length < len)
+                        Array.Resize(ref Settings.settings.Fonts, len);
+                    for (int i = 0; i < len; i++)
+                        if (string.IsNullOrWhiteSpace(Settings.settings.Fonts[i]))
+                            Settings.settings.Fonts[i] = "Default";
                 }
                 else
                 {

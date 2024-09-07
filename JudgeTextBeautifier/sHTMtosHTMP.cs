@@ -16,6 +16,7 @@ namespace JudgeTextBeautifier
             Settings.settings.Reset();
             Object.Destroy(__instance.hitTextContainer);
             InitSHT(__instance);
+            Object.DontDestroyOnLoad(__instance.hitTextContainer);
         }
         public static void SetTalmoTitle()
         {
