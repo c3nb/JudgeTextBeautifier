@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HarmonyLib;
+using System;
+using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Reflection;
+using TinyJson;
 using UnityEngine;
-using HarmonyLib;
 using static UnityModManagerNet.UnityModManager;
 using Object = UnityEngine.Object;
-using System.IO;
-using System.Diagnostics;
-using TinyJson;
 
 namespace JudgeTextBeautifier
 {
@@ -20,7 +16,6 @@ namespace JudgeTextBeautifier
         public static Harmony har;
         public static readonly string TalmoPath = Path.Combine("Mods", "JudgeTextBeautifier", "Talmos.json");
         public static Talmo[] Talmos;
-        public static bool HasOverlayer = false;
         public static void Load(ModEntry modEntry)
         {
             mod = modEntry;
@@ -34,7 +29,6 @@ namespace JudgeTextBeautifier
                     har = new Harmony(mod.Info.Id);
                     har.PatchAll(Assembly.GetExecutingAssembly());
                     _ = Settings.settings;
-                    HasOverlayer = modEntries.FirstOrDefault(m => m.Info.Id == "Overlayer" && m.Enabled) != null;
                 }
                 else
                 {
@@ -45,7 +39,6 @@ namespace JudgeTextBeautifier
             };
             modEntry.OnGUI = (mod) =>
             {
-                GUILayout.Label($"Overlayer{(HasOverlayer ? "" : " Not")} Detected");
                 Settings settings = Settings.settings;
                 Language lang = Language.Current;
                 bool newIsTalmo = settings.IsTalmo.DrawBool(lang.ColorMode);

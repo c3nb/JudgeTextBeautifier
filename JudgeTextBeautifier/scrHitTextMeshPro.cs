@@ -112,7 +112,7 @@ namespace JudgeTextBeautifier
         }
         public TextMeshPro text;
         public bool dead;
-		public HitMargin hitMargin;
+        public HitMargin hitMargin;
         public float timer;
         public int frameShown;
         public bool forceOnScreen;
@@ -120,12 +120,12 @@ namespace JudgeTextBeautifier
         public Camera gameCam;
         public Vector3 textPos;
         public Renderer meshRenderer;
-		public float startingSize = 0.1f;
-		public float sizeUp = 0.03f;
-		public float duration = 0.15f;
-		public int vibrato = 5;
-		public float elasticity = 1;
+        public float startingSize = 0.1f;
+        public float sizeUp = 0.03f;
+        public float duration = 0.15f;
+        public int vibrato = 5;
+        public float elasticity = 1;
 
         public float appearDuration = 0.5f;
-	}
+    }
 }

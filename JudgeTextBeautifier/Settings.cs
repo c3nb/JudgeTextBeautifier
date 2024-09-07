@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
 using TinyJson;
 
 namespace JudgeTextBeautifier
@@ -30,17 +27,15 @@ namespace JudgeTextBeautifier
             => File.WriteAllText(SettingsPath, this.ToJson());
         public string GetString(HitMargin hitMargin)
         {
-            if (Main.HasOverlayer)
-                return Tags.GetResult(hitMargin);
             switch (hitMargin)
             {
-                case HitMargin.TooEarly: 
+                case HitMargin.TooEarly:
                     return TooEarly;
-                case HitMargin.VeryEarly: 
+                case HitMargin.VeryEarly:
                     return VeryEarly;
-                case HitMargin.EarlyPerfect: 
+                case HitMargin.EarlyPerfect:
                     return EarlyPerfect;
-                case HitMargin.Perfect: 
+                case HitMargin.Perfect:
                     return Perfect;
                 case HitMargin.LatePerfect:
                     return LatePerfect;
@@ -88,8 +83,6 @@ namespace JudgeTextBeautifier
         }
         public void OnChange()
         {
-            if (Main.HasOverlayer)
-                Tags.CompileAll(this);
         }
         private static Settings _settings;
         public bool IsTalmo

@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace JudgeTextBeautifier
 {

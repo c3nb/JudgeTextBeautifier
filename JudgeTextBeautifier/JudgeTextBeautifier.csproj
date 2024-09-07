@@ -294,14 +294,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckIfHasOverlayer.cs" />
     <Compile Include="FontManager.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="sHTM_UpdatePatch.cs" />
     <Compile Include="sHTM_ShowPatch.cs" />
     <Compile Include="sHTM_FontPatch.cs" />
-    <Compile Include="Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="scrHitTextMeshPro.cs" />
     <Compile Include="Settings.cs" />

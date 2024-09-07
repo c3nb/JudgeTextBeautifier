@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 #pragma warning disable
 
 namespace JudgeTextBeautifier
@@ -10,7 +10,7 @@ namespace JudgeTextBeautifier
     public class Talmo
     {
         public static Language lang => Language.Current;
-        bool Saved = false; 
+        bool Saved = false;
         public static readonly Dictionary<HitMargin, Color> hitMarginColors = new Dictionary<HitMargin, Color>()
         {
             { HitMargin.TooEarly, new Color(1, 0, 0, 1) },
